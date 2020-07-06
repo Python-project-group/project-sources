@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>用户注册</title>
+<link href="{% static 'css/sign_up.css' %}" rel="stylesheet" rev="stylesheet" type="text/css" media="all" />
+<script type="text/javascript" src="{% static 'js/jQuery1.7.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery-1.8.2.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery1.42.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.SuperSlide.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/Validform_v5.3.2_min.js' %}"></script>
+<script type="text/javascript">
+
+
+$(document).ready(function(){
+	var $tab_li = $('#tab ul li');
+	$tab_li.hover(function(){
+		$(this).addClass('selected').siblings().removeClass('selected');
+		var index = $tab_li.index(this);
+		$('div.tab_box > div').eq(index).show().siblings().hide();
+	});
+});
+</script>
+<script type="text/javascript">
+$(function(){
+
+  $("#stu_tel_hide").focus(function(){
+ var telNum = $(this).val();
+ if(telNum=='输入手机号'){
+ $(this).val('');
+ }
+});
+$("#stu_tel_hide").focusout(function(){
+ var telNum = $(this).val();
+ if(telNum==''){
+ $(this).val('输入手机号');
+ }
+});
+
+$("#stu_username_hide").focus(function(){
+ var username = $(this).val();
+ if(username=='输入用户名'){
+ $(this).val('');
+ }
+});
+$("#stu_username_hide").focusout(function(){
+ var username = $(this).val();
+ if(username==''){
+ $(this).val('输入用户名');
+ }
+});
+$("#stu_password_hide").focus(function(){
+ var username = $(this).val();
+ if(username=='输入密码'){
+ $(this).val('');
+ }
+});
+$("#stu_password_hide").focusout(function(){
+ var username = $(this).val();
+ if(username==''){
+ $(this).val('输入密码');
+ }
+});
+
+
+
+$("#stu_password_hide2").focus(function(){
+ var username = $(this).val();
+ if(username=='再次输入密码'){
+ $(this).val('');
+ }
+});
+$("#stu_password_hide2").focusout(function(){
+ var username = $(this).val();
+ if(username==''){
+ $(this).val('再次输入密码');
+ }
+});
+
+
+$("#stu_code_hide").focus(function(){
+ var username = $(this).val();
+ if(username=='输入验证码'){
+ $(this).val('');
+ }
+});
+$("#stu_code_hide").focusout(function(){
+ var username = $(this).val();
+ if(username==''){
+ $(this).val('输入验证码');
+ }
+});
+$(".stu_login_error").Validform({
+	tiptype:function(msg,o,cssctl){
+		var objtip=$(".stu_error_box");
+		cssctl(objtip,o.type);
+		objtip.text(msg);},
+	ajaxPost:true
+});
+});
+</script>
+<script type="text/javascript">
+$(function(){
+	$(".screenbg ul li").each(function(){
+		$(this).css("opacity","0");
+	});
+	$(".screenbg ul li:first").css("opacity","1");
+	var index = 0;
+	var t;
+	var li = $(".screenbg ul li");
+	var number = li.size();
+	function change(index){
+		li.css("visibility","visible");
+		li.eq(index).siblings().animate({opacity:0},3000);
+		li.eq(index).animate({opacity:1},3000);
+	}
+	function show(){
+		index = index + 1;
+		if(index <= number-1){
+			change(index);
+		}else{
+			index = 0;
+			change(index);
+		}
+	}
+	t = setInterval(show,8000);
+	//根据窗口宽度生成图片宽度
+	var width = $(window).width();
+	$(".screenbg ul img").css("width",width+"px");
+
+});
+	//确认密码验证
+$(".tip").hide();
+      function checkpas1(){//当第一个密码框失去焦点时，触发checkpas1事件
+        var pas1=document.getElementById("stu_password_hide").value;
+        var pas2=document.getElementById("stu_password_hide2").value;//获取两个密码框的值
+        if(pas1!=pas2&&pas2!="")//此事件当两个密码不相等且第二个密码是空的时候会显示错误信息
+          $(".tip").show();
+        else
+          $(".tip").hide();//若两次输入的密码相等且都不为空时，不显示错误信息。
+        }
+      function checkpas(){//当第一个密码框失去焦点时，触发checkpas2件
+        var pas1=document.getElementById("stu_password_hide").value;
+        var pas2=document.getElementById("stu_password_hide2").value;//获取两个密码框的值
+        if(pas1!=pas2){
+          $(".tip").show();//当两个密码不相等时则显示错误信息
+        }else{
+          $(".tip").hide();
+        }
+        }
+      function checkpas2(){//点击提交按钮时，触发checkpas2事件，会进行弹框提醒以防无视错误信息提交
+        var pas3=document.getElementById("stu_password_hide").value;
+        var pas4=document.getElementById("stu_password_hide2").value;
+        if(pas3!=pas4){
+          alert("两次输入的密码不一致！");
+          return false;
+        }
+      }
+</script>
+
+            <script>
+            function click_btn1(){
+              document.getElementById('mode').style.backgroundImage = "url('button_bg_1.png')";
+            }
+
+            function click_btn2(){
+              document.getElementById('mode').style.backgroundImage = "url('button_bg_2.png')"
+            }
+          </script>
+
+      <style>
+        /*背景*/
+        body
+            {
+                background-image:url({% static 'images/bg.jpeg'%});
+                background-repeat:no-repeat;
+                background-attachment:fixed;
+                background-size:cover;
+            }
+     </style>
+
+</head>
+
+<body>
+<div id="tab">
+
+  <div class="tab_box">
+    <!-- 注册 -->
+    <div>
+      <form action="/app/register/" method="post" class="stu_login_error" >
+        {% csrf_token %}
+        <div id="mode" style="background-image: url({% static 'images/button_bg_1.png'%}); ">
+          <input type="button" name="register" onclick="click_btn1(); location.href='/app/register'" value="用户注册" autofocus>
+          <input type="button" name="register" onclick="click_btn2(); location.href='/app/registerc'" value="商家注册">
+        </div>
+        <div class="stu_error_box"></div>
+        <div id="telNum" >
+          <label>手机号&nbsp;&nbsp;&nbsp;：</label>
+          <input type="text" id="stu_tel_hide" name="telNum" value="输入手机号" nullmsg="手机号不能为空！" datatype="m" errormsg="手机号不符合规范！" sucmsg="手机号验证通过！"/>
+          <!--ajaxurl="demo/valid.jsp"-->
+        </div>
+        <div id="username" >
+          <label>用户名&nbsp;&nbsp;&nbsp;：</label>
+          <input type="text" id="stu_username_hide" name="username" value="输入用户名" nullmsg="用户名不能为空！" datatype="s6-18" errormsg="用户名范围在6~18个字符之间！" sucmsg="用户名验证通过！"/>
+          <!--ajaxurl="demo/valid.jsp"-->
+        </div>
+        <div id="password" >
+          <label>密&nbsp;&nbsp;&nbsp;码&nbsp;&nbsp;&nbsp;：</label>
+          <input type="password" id="stu_password_hide" name="password" value="输入密码" nullmsg="密码不能为空！" datatype="*6-16" errormsg="密码范围在6~16位之间！" sucmsg="密码验证通过！" onblur="checkpas1();"/>
+        </div>
+        <div id="password2" >
+          <label>确认密码：</label>
+          <input type="password" id="stu_password_hide2" name="password2" value="再次输入密码" onChange="checkpas();"/>
+        </div>
+        <div id="code" >
+          <label >验证码&nbsp;&nbsp;&nbsp;：</label>
+          <input type="text" id="stu_code_hide" name="code"  value="输入验证码" nullmsg="验证码不能为空！" datatype="*4-4" errormsg="验证码有4位数！" sucmsg="验证码验证通过！"/>
+          <img src="{% static 'images/captcha.jpg' %}" title="点击更换" alt="验证码占位图" style="vertical-align:bottom;"/> </div>
+        <div id="signup">
+          <button type="submit" onclick="checkpas2();" >注册</button>
+        </div>
+      </form>
+        <div>
+            <a href="/app/index/" style="color: black; float:left; font-size:15px">返回首页</a>
+            <a href="/app/login/" style="color: black; float:right; font-size:15px">登录</a>
+         </div>
+    </div>
+   <!-- 注册结束-->
+  </div>
+</div>
+{% if messages %}
+        <script>
+            {% for msg in messages %}
+                alert('{{ msg.message }}');
+            {% endfor %}
+        </script>
+    {% endif %}
+
+  <p> hhhhhhhhh</p><p> hhhhhhhhh</p><p> hhhhhhhhh</p>
+</body>
+</html>
